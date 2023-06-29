@@ -2,13 +2,14 @@ import React, {useState} from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import Header from './components/header';
 import TodoItem from './components/todoitem';
+import AddTodo from './components/add_todo';
 
 export default function App(){
 
     const [todos, setTodo] = useState([
-        {text: 'buy coffee', key: '1'},
-        {text: 'create an app', key: '2'},
-        {text: 'play on the switch', key: '3'},
+        {text: 'buy coffee', key: 1},
+        {text: 'create an app', key: 2},
+        {text: 'play on the switch', key: 3},
     ]);
 
     const pressHanlder = (key) => {
@@ -17,11 +18,21 @@ export default function App(){
         });
     }
 
+    const submitHandler = (text, key) => {
+        console.log(key);
+        setTodo( (prevTodos) => {
+            return [
+                ...prevTodos,
+                {text: text, key: key}
+            ]
+        });
+    };
+
     return (
         <View style={style.container}>
             <Header />
             <View style={style.content}>
-                {/* To do Form */}
+                <AddTodo submitHandler={submitHandler} length={todos.length}/>
                 <FlatList 
                     data= {todos}
                     renderItem={ ({item}) => (
